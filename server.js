@@ -1,15 +1,13 @@
 'use strict';
 
 const express = require('express');
-const mongo = require('mongodb');
-const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const URL = require('./models/URL.js');
 const app = express();
 
 // Basic Configuration 
 const port = process.env.PORT || 3000;
-mongoose.connect(process.env.DB_URI);
 
 app.listen(port, () => {
   console.log('Node.js listening ...');
