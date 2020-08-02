@@ -4,6 +4,7 @@ const express = require('express');
 const mongo = require('mongodb');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const app = express();
 
 // Basic Configuration 
@@ -17,10 +18,7 @@ app.listen(port, () => {
 });
 
 app.use(cors());
-
-/** this project needs to parse POST bodies **/
-// you should mount the body-parser here
-
+app.use(bodyParser.urlencoded({extended: true}));
 app.use('/public', express.static(`${process.cwd()}/public`));
 
 app.get('/', (req, res) => {
