@@ -9,9 +9,7 @@ const app = express();
 
 // Basic Configuration 
 const port = process.env.PORT || 3000;
-
-/** this project needs a db !! **/ 
-// mongoose.connect(process.env.DB_URI);
+mongoose.connect(process.env.DB_URI);
 
 app.listen(port, () => {
   console.log('Node.js listening ...');
