@@ -21,6 +21,19 @@ app.get('/', (req, res) => {
   res.sendFile(`${process.cwd()}/views/index.html`);
 });
 
-app.get("/api/hello", (req, res) => {
+app.get('/api/hello', (req, res) => {
   res.json({greeting: 'hello API'});
+});
+
+app.post('/api/shorturl/new', (request, response) => {
+  const requestBodyOriginalUrl = request.body.original_url;
+  URL.findOne({original_url: requestBodyOriginalUrl}).lean()
+                  .then(urlObject => {
+                    if(!urlObject){
+                      return new URL({original_url: requestBodyOriginalUrl}).save();
+                    }
+                  })
+                  .then(urlObject => {
+                    response.json(urlObject);
+                  })
 });
