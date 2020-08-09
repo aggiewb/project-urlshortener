@@ -27,7 +27,7 @@ app.get('/api/hello', (req, res) => {
 });
 
 app.post('/api/shorturl/new', (request, response) => {
-  const originalUrl = request.body.original_url;
+  const originalUrl = request.body.url;
   dns.lookup(originalUrl.replace(/https?:\/\//, ''), err => {
     if(err){
       response.json({"error":"invalid URL"});
