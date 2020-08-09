@@ -33,9 +33,13 @@ app.post('/api/shorturl/new', (request, response) => {
       response.json({"error":"invalid URL"});
     } else {
       new URL({original_url: originalUrl}).save()
-      .then(urlObject => {
-        response.json({original_url: urlObject.original_url, short_url: urlObject.short_url});
+        .then(urlObject => {
+          response.json({original_url: urlObject.original_url, short_url: urlObject.short_url});
       });
     }
   });
+});
+
+app.get('/api/shorturl/:short_url', (request, response) => {
+
 });
