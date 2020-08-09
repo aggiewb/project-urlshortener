@@ -26,14 +26,8 @@ app.get('/api/hello', (req, res) => {
 });
 
 app.post('/api/shorturl/new', (request, response) => {
-  const requestBodyOriginalUrl = request.body.original_url;
-  URL.findOne({original_url: requestBodyOriginalUrl}).lean()
-                  .then(urlObject => {
-                    if(!urlObject){
-                      return new URL({original_url: requestBodyOriginalUrl}).save();
-                    }
-                  })
-                  .then(urlObject => {
-                    response.json(urlObject);
-                  })
+  new URL({original_url: request.body.original_url}).save()
+    .then(urlObject => {
+      response.json({original_url: urlObject.original_url, short_url: urlObject.short_url});
+    });
 });
