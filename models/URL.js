@@ -12,7 +12,6 @@ const urlSchema = mongoose.Schema({
     short_url: Number
 });
 
-//TODO: increment short url here
 autoIncrement.initialize(mongoose.connection);
 urlSchema.plugin(autoIncrement.plugin, {
     model: 'URL',
