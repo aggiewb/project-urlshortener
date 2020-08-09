@@ -28,14 +28,25 @@ app.get('/api/hello', (req, res) => {
 
 app.post('/api/shorturl/new', (request, response) => {
   const originalUrl = request.body.original_url;
-  dns.lookup(originalUrl, err => {
+  dns.lookup(originalUrl.replace(/https?:\/\//, ''), err => {
     if(err){
       response.json({"error":"invalid URL"});
     } else {
       new URL({original_url: originalUrl}).save()
-      .then(urlObject => {
-        response.json({original_url: urlObject.original_url, short_url: urlObject.short_url});
-      });
-    }
+        .then(urlObject => {
+          response.json({original_url: urlObject.original_url, short_url: urlObject.short_url});
+        });
+      }
+    });
   });
+
+app.get('/api/shorturl/:shorturl', (request, response) => {
+  URL.findOne({short_url: request.params.shorturl})
+     .then(urlObject => {
+       let originalUrl = urlObject.original_url;
+       if(!originalUrl.match(/http/)){
+         originalUrl = `https://${originalUrl}`;
+       }
+       response.redirect(originalUrl);
+     });
 });
